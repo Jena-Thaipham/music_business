@@ -1,5 +1,6 @@
 import requests
 import base64
+import json 
 from config import CLIENT_ID, CLIENT_SECRET
 
 def get_access_token():
@@ -32,7 +33,14 @@ def get_album_info(album_id, access_token):
     }
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
-        return response.json()  # Return the entire album data
+        album_data = response.json()
+        
+        # Convert all list fields to JSON strings
+        for key, value in album_data.items():
+            if isinstance(value, (list, dict)): 
+                album_data[key] = json.dumps(value)  
+        
+        return album_data
     else:
         print(f"Error fetching album {album_id}: {response.status_code} - {response.text}")
         return None
@@ -47,7 +55,14 @@ def get_artist_info(artist_id, access_token):
     }
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
-        return response.json()  # Return the entire artist data
+        artist_data = response.json()
+        
+        # Convert all list fields to JSON strings
+        for key, value in artist_data.items():
+            if isinstance(value, (list, dict)):  
+                artist_data[key] = json.dumps(value)  
+        
+        return artist_data
     else:
         print(f"Error fetching artist {artist_id}: {response.status_code} - {response.text}")
         return None
