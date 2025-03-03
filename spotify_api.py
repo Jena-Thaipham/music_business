@@ -71,3 +71,4 @@ def extract_artist_data_to_df(artist_ids, access_token):
         if artist_info:
             artists_data.append(artist_info)
     return pd.DataFrame(artists_data)
+
