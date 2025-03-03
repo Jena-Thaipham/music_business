@@ -13,8 +13,7 @@ def get_access_token():
     token_url = 'https://accounts.spotify.com/api/token'
     headers = {
         'Authorization': f"Basic {base64.b64encode(f'{CLIENT_ID}:{CLIENT_SECRET}'.encode()).decode()}",
-        'Content-Type': 'application/x-www-form-urlencoded'
-    }
+            }
     data = {
         'grant_type': 'client_credentials'
     }
@@ -72,4 +71,3 @@ def extract_artist_data_to_df(artist_ids, access_token):
         if artist_info:
             artists_data.append(artist_info)
     return pd.DataFrame(artists_data)
-
