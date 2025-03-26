@@ -12,10 +12,10 @@ This project leverages Spotify's Web API to extract, analyze, and visualize musi
 
 ### 1. Data Extraction  
 - **API Setup**: Utilize Spotify's Web API to fetch track details (name, artist, album, genre), popularity metrics, release dates, and user playlist data.  
-- **Data Collection**: Implement Python/R scripts to automate data extraction based on predefined queries (e.g., top songs per genre, trending artists).  
+- **Data Collection**: Implement Python scripts to automate data extraction based on predefined queries (e.g., top songs per genre, trending artists).  
 
 ### 2. Database Design  
-- **Database Creation**: Set up a relational database (PostgreSQL/MySQL) to store the extracted data.  
+- **Database Creation**: Set up a relational database (SQLite) to store the extracted data.  
 - **Schema Design**: Define tables for tracks, artists, albums, and genres with proper normalization to eliminate redundancy.  
 
 ### 3. Data Analysis  
@@ -23,7 +23,7 @@ This project leverages Spotify's Web API to extract, analyze, and visualize musi
   - Which genres are gaining popularity?  
   - What characteristics define the most popular tracks?  
   - How do demographics (age, location) influence music preferences?  
-- **Trends and Patterns**: Use visualization tools like Tableau or Power BI to present music consumption trends.  
+- **Trends and Patterns**: Use visualization tools like Tableau to present music consumption trends.  
 
 ### 4. Business Insights  
 - **Market Analysis**: Identify emerging genres and artists for record labels to focus on.  
@@ -34,10 +34,10 @@ This project leverages Spotify's Web API to extract, analyze, and visualize musi
 - **Interactive Dashboard**: Develop a dynamic dashboard to allow stakeholders to explore and interact with the data.  
 
 ## Technologies Used  
-- **Programming Languages**: Python / R  
-- **Database**: PostgreSQL / MySQL  
+- **Programming Languages**: Python  
+- **Database**: SQLite 
 - **APIs**: Spotify Web API  
-- **Data Visualization**: Tableau / Power BI / Matplotlib / Seaborn  
+- **Data Visualization**: Tableau 
 - **Tools**: Pandas, NumPy, SQLAlchemy  
 
 ## Installation & Setup  
