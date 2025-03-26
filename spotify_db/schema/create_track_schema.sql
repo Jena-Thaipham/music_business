@@ -14,7 +14,5 @@ CREATE TABLE IF NOT EXISTS `tracks` (
 	`disc_number` INTEGER,
 	`explicit` REAL,
 	`duration_ms` INTEGER,
-	`popularity` INTEGER,
-FOREIGN KEY(`artist_id`) REFERENCES `artists`(`artist_id`),
-FOREIGN KEY(`album_id`) REFERENCES `albums`(`album_id`)
+	`popularity` INTEGER
 );
