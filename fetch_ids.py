@@ -53,8 +53,39 @@ def get_random_ids(access_token, item_type, count=40):
         'Content-Type': 'application/json'
     }
     
-    search_terms = ['%25a%25', '%25e%25', '%25i%25', '%25o%25', '%25u%25',
-                   '%25the%25', '%25and%25', '%25best%25', '%25top%25', '%25mix%25']
+    search_terms = [
+    
+    '%25a%25', '%25b%25', '%25c%25', '%25d%25', '%25e%25', 
+    '%25f%25', '%25g%25', '%25h%25', '%25i%25', '%25j%25',
+    '%25k%25', '%25l%25', '%25m%25', '%25n%25', '%25o%25',
+    '%25p%25', '%25q%25', '%25r%25', '%25s%25', '%25t%25',
+    '%25u%25', '%25v%25', '%25w%25', '%25x%25', '%25y%25', '%25z%25',
+    
+    '%25the%25', '%25and%25', '%25you%25', '%25that%25', '%25have%25',
+    '%25for%25', '%25with%25', '%25this%25', '%25from%25', '%25they%25',
+    
+    '%25music%25', '%25song%25', '%25tune%25', '%25beat%25', '%25melody%25',
+    '%25rhythm%25', '%25sound%25', '%25track%25', '%25album%25', '%25artist%25',
+    '%25band%25', '%25singer%25', '%25vocal%25', '%25lyric%25', '%25chord%25',
+    
+    '%25pop%25', '%25rock%25', '%25jazz%25', '%25blues%25', '%25hiphop%25',
+    '%25rap%25', '%25edm%25', '%25electronic%25', '%25classical%25', '%25country%25',
+    '%25rnb%25', '%25reggae%25', '%25metal%25', '%25punk%25', '%25indie%25',
+    
+    '%25happy%25', '%25sad%25', '%25love%25', '%25heart%25', '%25cool%25',
+    '%25hot%25', '%25chill%25', '%25party%25', '%25dance%25', '%25sleep%25',
+    '%25energy%25', '%25calm%25', '%25romantic%25', '%25summer%25', '%25winter%25',
+    
+    '%25mix%25', '%25best%25', '%25top%25', '%25great%25', '%25awesome%25',
+    '%25hit%25', '%25now%25', '%25new%25', '%25old%25', '%25gold%25',
+    '%25fm%25', '%25radio%25', '%25live%25', '%25cover%25', '%25remix%25',
+    
+    '%252023%25', '%252022%25', '%252021%25', '%252020%25', '%2519%25',
+    '%2590s%25', '%2580s%25', '%2570s%25', '%2560s%25', '%2550s%25',
+    
+    '%25usa%25', '%25uk%25', '%25europe%25', '%25asia%25', '%25africa%25',
+    '%25latin%25', '%25kpop%25', '%25jpop%25', '%25french%25', '%25german%25'
+]
     random.shuffle(search_terms)
     
     ids = set()
@@ -74,42 +105,66 @@ def get_random_ids(access_token, item_type, count=40):
         time.sleep(0.5)
     
     return random.sample(list(ids), min(count, len(ids))) if ids else []
-    
-def get_random_user_ids(access_token, count=40):
+
+def get_random_user_ids(access_token, count=50):
     headers = {
         'Authorization': f'Bearer {access_token}',
         'Content-Type': 'application/json'
     }
     
+    user_ids = set()
+    
     popular_playlists = [
         '37i9dQZEVXbMDoHDwVN2tF',  
         '37i9dQZEVXbLRQDuF5jeBp',  
-        '37i9dQZEVXbLiRSasKsNU9'   
+        '37i9dQZEVXbLiRSasKsNU9',  
+        '37i9dQZEVXbNG2KDcFcKOF', 
+        '37i9dQZEVXbLp5XoPON0wI'   
     ]
     
-    user_ids = set()
-    
     for playlist_id in popular_playlists:
-        url = f"https://api.spotify.com/v1/playlists/{playlist_id}"
-        response = fetch_with_retry(url, headers)
-        
-        if response and response.status_code == 200:
-            playlist = response.json()
-            if 'owner' in playlist and 'id' in playlist['owner']:
-                user_ids.add(playlist['owner']['id'])
-        
-        tracks_url = f"https://api.spotify.com/v1/playlists/{playlist_id}/tracks?limit=50"
-        tracks_response = fetch_with_retry(tracks_url, headers)
-        
-        if tracks_response and tracks_response.status_code == 200:
-            tracks = tracks_response.json().get('items', [])
-            for track in tracks:
-                if track and 'added_by' in track and 'id' in track['added_by']:
-                    user_ids.add(track['added_by']['id'])
-        
-        time.sleep(0.5)
+        try:
+            playlist_url = f"https://api.spotify.com/v1/playlists/{playlist_id}"
+            playlist_response = requests.get(playlist_url, headers=headers)
+            if playlist_response.status_code == 200:
+                owner_id = playlist_response.json().get('owner', {}).get('id')
+                if owner_id:
+                    user_ids.add(owner_id)
+            
+            tracks_url = f"https://api.spotify.com/v1/playlists/{playlist_id}/tracks?limit=50"
+            tracks_response = requests.get(tracks_url, headers=headers)
+            if tracks_response.status_code == 200:
+                for item in tracks_response.json().get('items', []):
+                    added_by_id = item.get('added_by', {}).get('id')
+                    if added_by_id:
+                        user_ids.add(added_by_id)
+            
+            time.sleep(0.5)
+        except Exception as e:
+            logging.error(f"Error processing playlist {playlist_id}: {str(e)}")
     
-    return random.sample(list(user_ids), min(count, len(user_ids))) if user_ids else []
+    search_terms = [
+        'a', 'e', 'i', 'o', 'u',
+        'music', 'love', 'best', 'top', 'play',
+        'mix', 'hit', 'song', 'tune', 'beat',
+        'artist', 'band', 'dj', 'pop', 'rock'
+    ]
+    
+    for term in search_terms:
+        try:
+            search_url = f"https://api.spotify.com/v1/search?q={term}&type=user&limit=50"
+            search_response = requests.get(search_url, headers=headers)
+            if search_response.status_code == 200:
+                for user in search_response.json().get('users', {}).get('items', []):
+                    if user and 'id' in user:
+                        user_ids.add(user['id'])
+            
+            time.sleep(0.5)
+        except Exception as e:
+            logging.error(f"Error searching users with term {term}: {str(e)}")
+    
+    user_ids = list(user_ids)
+    return random.sample(user_ids, min(count, len(user_ids))) if user_ids else []
 
 def save_ids_to_file(ids, filename):
     existing_ids = set()
