@@ -38,7 +38,7 @@ This project leverages Spotify's Web API to extract, analyze, and visualize musi
 - **Database**: SQLite 
 - **APIs**: Spotify Web API  
 - **Data Visualization**: Tableau 
-- **Tools**: Pandas, NumPy, SQLite  
+- **Tools**: Pandas, NumPy, SQLAchemy  
 
 ## Installation & Setup  
 1. Clone the repository:  
