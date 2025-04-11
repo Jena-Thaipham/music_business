@@ -106,65 +106,6 @@ def get_random_ids(access_token, item_type, count=40):
     
     return random.sample(list(ids), min(count, len(ids))) if ids else []
 
-def get_random_user_ids(access_token, count=50):
-    headers = {
-        'Authorization': f'Bearer {access_token}',
-        'Content-Type': 'application/json'
-    }
-    
-    user_ids = set()
-    
-    popular_playlists = [
-        '37i9dQZEVXbMDoHDwVN2tF',  
-        '37i9dQZEVXbLRQDuF5jeBp',  
-        '37i9dQZEVXbLiRSasKsNU9',  
-        '37i9dQZEVXbNG2KDcFcKOF', 
-        '37i9dQZEVXbLp5XoPON0wI'   
-    ]
-    
-    for playlist_id in popular_playlists:
-        try:
-            playlist_url = f"https://api.spotify.com/v1/playlists/{playlist_id}"
-            playlist_response = requests.get(playlist_url, headers=headers)
-            if playlist_response.status_code == 200:
-                owner_id = playlist_response.json().get('owner', {}).get('id')
-                if owner_id:
-                    user_ids.add(owner_id)
-            
-            tracks_url = f"https://api.spotify.com/v1/playlists/{playlist_id}/tracks?limit=50"
-            tracks_response = requests.get(tracks_url, headers=headers)
-            if tracks_response.status_code == 200:
-                for item in tracks_response.json().get('items', []):
-                    added_by_id = item.get('added_by', {}).get('id')
-                    if added_by_id:
-                        user_ids.add(added_by_id)
-            
-            time.sleep(0.5)
-        except Exception as e:
-            logging.error(f"Error processing playlist {playlist_id}: {str(e)}")
-    
-    search_terms = [
-        'a', 'e', 'i', 'o', 'u',
-        'music', 'love', 'best', 'top', 'play',
-        'mix', 'hit', 'song', 'tune', 'beat',
-        'artist', 'band', 'dj', 'pop', 'rock'
-    ]
-    
-    for term in search_terms:
-        try:
-            search_url = f"https://api.spotify.com/v1/search?q={term}&type=user&limit=50"
-            search_response = requests.get(search_url, headers=headers)
-            if search_response.status_code == 200:
-                for user in search_response.json().get('users', {}).get('items', []):
-                    if user and 'id' in user:
-                        user_ids.add(user['id'])
-            
-            time.sleep(0.5)
-        except Exception as e:
-            logging.error(f"Error searching users with term {term}: {str(e)}")
-    
-    user_ids = list(user_ids)
-    return random.sample(user_ids, min(count, len(user_ids))) if user_ids else []
 
 def save_ids_to_file(ids, filename):
     existing_ids = set()
