@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS `tracks` (
-	`track_id` TEXT NOT NULL PRIMARY KEY,
+	`track_id` TEXT PRIMARY KEY,
 	`track_name` TEXT,
 	`artist_id` TEXT NOT NULL,
 	`artist_name` TEXT,
@@ -14,5 +14,5 @@ CREATE TABLE IF NOT EXISTS `tracks` (
 	`disc_number` INTEGER,
 	`explicit` REAL,
 	`duration_ms` INTEGER,
-	`popularity` INTEGER
+	`popularity` INTEGER CHECK(popularity BETWEEN 0 AND 100),
 );
