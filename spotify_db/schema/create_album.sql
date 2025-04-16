@@ -7,5 +7,5 @@ CREATE TABLE IF NOT EXISTS albums (
     total_tracks INTEGER,
     popularity INTEGER CHECK(popularity BETWEEN 0 AND 100),
     markets TEXT,
-    album_uri TEXT,
+    album_uri TEXT
 );
