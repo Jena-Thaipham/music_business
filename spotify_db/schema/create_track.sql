@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `tracks` (
 	`album_type` TEXT,
 	`album_name` INTEGER,
 	`track_uri` TEXT,
-	`release_date` REAL,
+	`release_date` TEXT,
 	`track_number` INTEGER,
 	`total_track` INTEGER,
 	`market` TEXT,
