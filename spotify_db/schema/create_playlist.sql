@@ -4,7 +4,6 @@ CREATE TABLE IF NOT EXISTS `playlists` (
     `owner_id` TEXT,
     `track_id` TEXT NOT NULL,
     `total_tracks` INTEGER,
-    `playlist_followers` INTEGER,
     `market` TEXT,
     `public` BOOLEAN,
     `created_at` TEXT,
